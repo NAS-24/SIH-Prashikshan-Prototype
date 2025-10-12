@@ -1,0 +1,320 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Internship Posting - Prashikhan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f0f2f5;
+        }
+
+        .header {
+            background: #1e293b;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            border-radius: 8px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e7ff;
+        }
+
+        .navbar {
+            background: #1e293b;
+            padding: 0 40px;
+            border-top: 1px solid #334155;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 15px 25px;
+            display: block;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #334155;
+        }
+
+        .nav-links a.active {
+            color: white;
+            background: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #1e293b;
+        }
+
+        h2 {
+            font-size: 18px;
+            margin: 25px 0 15px 0;
+            color: #1e293b;
+        }
+
+        .card {
+            background: white;
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+            margin-bottom: 30px;
+        }
+
+        .form-group {
+            margin-bottom: 20px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            color: #334155;
+            font-size: 14px;
+        }
+
+        input[type="text"], select {
+            width: 100%;
+            padding: 12px 16px;
+            border: 2px solid #cbd5e1;
+            border-radius: 8px;
+            font-size: 15px;
+            transition: border-color 0.3s;
+        }
+
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 1fr;
+            gap: 20px;
+        }
+
+        .radio-group {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+            margin-top: 15px;
+        }
+
+        .radio-option {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        input[type="radio"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        input[type="checkbox"] {
+            width: 18px;
+            height: 18px;
+            cursor: pointer;
+        }
+
+        .btn {
+            padding: 12px 28px;
+            border-radius: 8px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 15px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+            width: 100%;
+            padding: 15px;
+            font-size: 16px;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .btn-active {
+            background: #3b82f6;
+            color: white;
+            padding: 10px 20px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 15px;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+            background: #e5e7eb;
+            color: #374151;
+        }
+
+        .job-description {
+            background: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            border: 1px solid #e2e8f0;
+            margin-top: 15px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>Prashikhan</span>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar"></div>
+            <span>Raj Patel</span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="industry_dashboard.html">Dashboard</a></li>
+            <li><a href="internship-posting.html" class="active">Internship Posting</a></li>
+            <li><a href="applicant-review.html">Applicant Review (ATS)</a></li>
+            <li><a href="logbook-verification.html">Logbook Verification</a></li>
+            <li><a href="account-settings.html">Account Settings</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Post a New Internsing</h1>
+
+        <div class="card">
+            <h2>Internshin Details</h2>
+            
+            <div class="form-group">
+                <label>Intench Title</label>
+                <input type="text" value="Digital Marketing Intern">
+            </div>
+
+            <div class="form-group">
+                <label>Company Name</label>
+                <input type="text" value="On-site">
+                <div class="radio-group">
+                    <div class="radio-option">
+                        <input type="radio" name="location" id="remote">
+                        <label for="remote" style="margin: 0;">Remote</label>
+                    </div>
+                </div>
+            </div>
+
+            <h2>Dates & Compensation</h2>
+            
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Location Type</label>
+                    <select>
+                        <option>Paid (Monthly)</option>
+                        <option>Unpaid</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Applicants</label>
+                    <select>
+                        <option>Negotable</option>
+                        <option>Fixed</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label>Total Applicants</label>
+                    <button class="btn btn-active">Active</button>
+                </div>
+            </div>
+
+            <h2>Location Type</h2>
+
+            <div class="job-description">
+                <p><strong>Job Description & Requirements</strong></p>
+                <ol style="margin: 10px 0 0 20px; line-height: 1.8;">
+                    <li>Review loghew applicants submissions for "Digital Aialth
