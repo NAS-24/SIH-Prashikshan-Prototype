@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prashikshan - Discover Internships</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+
+        /* Custom scrollbar hiding for horizontal filter tags */
+        .filter-scroll::-webkit-scrollbar { display: none; }
+        .filter-scroll { -ms-overflow-style: none; scrollbar-width: none; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar: Student Dashboard Navigation (II. Student Dashboard) -->
+    <nav class="bg-gray-800 shadow-lg sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo/App Name -->
+                <div class="text-xl font-extrabold text-white">Prashikshan</div>
+                
+                <!-- Navigation Links -->
+                <div class="flex space-x-2 sm:space-x-4 overflow-x-auto filter-scroll">
+                    <!-- Current Page (Discover Internships) -->
+                    <a href="#" class="text-blue-400 font-bold px-3 py-2 rounded-md hover:text-white transition duration-200 border-b-2 border-blue-400 whitespace-nowrap">
+                        Discover Internships
+                    </a>
+                    <!-- LINK MODIFIED HERE -->
+                    <a href="student_applications.html" class="text-gray-300 font-medium px-3 py-2 rounded-md hover:text-white transition duration-200 whitespace-nowrap">
+                        My Applications
+                    </a>
+                    <a href="student_logbook.html" class="text-gray-300 font-medium px-3 py-2 rounded-md hover:text-white transition duration-200 whitespace-nowrap">
+                        Digital Logbook
+                    </a>
+                    <a href="student_report.html" class="text-gray-300 font-medium px-3 py-2 rounded-md hover:text-white transition duration-200 whitespace-nowrap">
+                        Final Report
+                    </a>
+                </div>
+                
+                <!-- User/Profile placeholder -->
+                <a href="index.html" class="text-gray-300 text-sm hidden sm:block hover:text-white transition duration-200">
+                    Student User (MVP) (Log Out)
+                </a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-6">Discover Internships</h1>
+
+        <!-- Search Bar -->
+        <div class="mb-8">
+            <div class="relative">
+                <input type="text" id="searchInput" placeholder="Search keyword or role title..." 
+                       class="w-full pl-12 pr-4 py-4 border border-gray-300 rounded-xl shadow-md focus:ring-blue-500 focus:border-blue-500 text-lg"
+                       oninput="filterInternships()">
+                <svg class="absolute left-4 top-1/2 transform -translate-y-1/2 h-6 w-6 text-gray-400" fill="none" viewBox="0 0 24 24" stroke="currentColor" stroke-width="2">
+                    <path stroke-linecap="round" stroke-linejoin="round" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+                </svg>
+            </div>
+        </div>
+
+        <!-- Filters Section -->
+        <div class="mb-8">
+            <p class="text-sm font-bold text-gray-600 mb-3">Advanced Filters (Click to toggle)</p>
+            <div id="filterTagsContainer" class="flex space-x-3 overflow-x-auto pb-2 filter-scroll">
+                <!-- Filters will be generated here by JS -->
+                <button class="bg-red-500 text-white font-semibold px-4 py-2 rounded-full shadow-sm hover:bg-red-600 transition duration-200 whitespace-nowrap clear-btn" onclick="clearFilters()">Clear Filters</button>
+            </div>
+        </div>
+        
+        <!-- Internship Listings -->
+        <div id="internship-listings" class="space-y-6">
+            <!-- Internship Cards will be injected here by JS -->
+        </div>
+        
+        <!-- No Results Message -->
+        <div id="noResults" class="hidden text-center py-10 bg-white rounded-xl shadow-md">
+            <p class="text-xl font-semibold text-gray-600">No internships match your current search criteria.</p>
+            <p class="text-gray-500 mt-2">Try clearing the filters or adjusting your keywords.</p>
+        </div>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-4 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between text-xs sm:text-sm">
+            <div>&copy; 2025 Prashikshan. All rights reserved.</div>
+            <div class="space-x-4 hidden sm:block">
+                <a href="#" class="hover:text-white">Contact</a>
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- Mock Data ---
+        const MOCK_INTERNSHIPS = [
+            {
+                title: "Backend Development Intern (NEP Focus)",
+                company: "Innovatech Solutions",
+                details: "Develop scalable RESTful APIs using Python/Flask. Focus on optimizing database queries and contributing to the core platform architecture.",
+                tags: ["Credit Bearing", "Stipend Provided", "College Approved", "6 Months", "Remote", "Technology"],
+                stipend: "₹ 15,000",
+                id: 1
+            },
+            {
+                title: "Digital Marketing Strategist Intern",
+                company: "Growth Hacking Agency",
+                details: "Assist in SEO strategy, social media campaigns, and performance tracking for B2B clients. Great exposure to real-world marketing analytics.",
+                tags: ["Credit Bearing", "Stipend Provided", "On-Site", "3 Months", "Marketing"],
+                stipend: "₹ 10,000",
+                id: 2
+            },
+            {
+                title: "Human Resources Talent Acquisition Intern",
+                company: "People Path Ventures",
+                details: "Support the recruitment lifecycle, screen candidates, and organize virtual onboarding events. Focus on diversity and inclusion initiatives.",
+                tags: ["Credit Bearing", "Unpaid", "On-Site", "6 Months", "HR"],
+                stipend: "Unpaid",
+                id: 3
+            },
+            {
+                title: "Financial Planning & Analysis Intern",
+                company: "EquityEdge Consulting",
+                details: "Work with senior analysts on quarterly budgeting, forecasting, and financial model creation for startups in the FinTech space.",
+                tags: ["Credit Bearing", "Stipend Provided", "College Approved", "3 Months", "Finance"],
+                stipend: "₹ 12,000",
+                id: 4
+            },
+            {
+                title: "Data Analytics Intern (Remote)",
+                company: "Synapse Data Labs",
+                details: "Clean, process, and visualize large datasets using Python (Pandas) and Tableau. Project focused on customer churn prediction.",
+                tags: ["Credit Bearing", "Stipend Provided", "Remote", "6 Months", "Technology"],
+                stipend: "₹ 18,000",
+                id: 5
+            },
+            {
+                title: "UI/UX Design Intern",
+                company: "Creative Flow Studio",
+                details: "Design wireframes and high-fidelity prototypes for web and mobile apps. Must be proficient in Figma/Sketch and user research principles.",
+                tags: ["Credit Bearing", "Unpaid", "Remote", "3 Months", "Design"],
+                stipend: "Unpaid",
+                id: 6
+            }
+        ];
+
+        const ALL_FILTERS = [
+            "Credit Bearing", "Stipend Provided", "College Approved", "Remote", "On-Site", 
+            "3 Months", "6 Months", "Technology", "Marketing", "HR", "Finance", "Design", "Unpaid"
+        ];
+        
+        let activeFilters = new Set();
+
+
+        // --- DOM Manipulation & Rendering ---
+
+        /**
+         * Renders all filter buttons and handles click listeners.
+         */
+        function renderFilters() {
+            const container = document.getElementById('filterTagsContainer');
+            // Store the Clear button temporarily
+            const clearButtonHTML = container.querySelector('.clear-btn').outerHTML; 
+            container.innerHTML = ''; // Clear existing filters
+
+            ALL_FILTERS.forEach(tag => {
+                const isActive = activeFilters.has(tag);
+                let tagClass = 'filter-tag font-medium px-4 py-2 rounded-full shadow-sm transition duration-200 whitespace-nowrap cursor-pointer text-sm';
+
+                if (isActive) {
+                    tagClass += ' bg-blue-600 text-white hover:bg-blue-700';
+                } else {
+                    tagClass += ' bg-gray-200 text-gray-700 hover:bg-gray-300';
+                }
+
+                const button = document.createElement('button');
+                button.className = tagClass;
+                button.textContent = tag;
+                button.onclick = () => toggleFilter(tag);
+                container.appendChild(button);
+            });
+            
+            // Re-add the Clear button at the end
+            container.insertAdjacentHTML('beforeend', clearButtonHTML);
+        }
+
+        /**
+         * Toggles a filter tag's active state and updates listings.
+         */
+        function toggleFilter(tag) {
+            if (activeFilters.has(tag)) {
+                activeFilters.delete(tag);
+            } else {
+                activeFilters.add(tag);
+            }
+            renderFilters();
+            filterInternships();
+        }
+
+        /**
+         * Clears all active filters and the search input.
+         */
+        function clearFilters() {
+            activeFilters.clear();
+            document.getElementById('searchInput').value = '';
+            renderFilters();
+            filterInternships();
+        }
+
+
+        /**
+         * Generates the HTML string for a single internship card.
+         */
+        function createInternshipCard(internship) {
+            const tagHTML = internship.tags.map(tag => {
+                let colorClass = 'bg-gray-200 text-gray-700';
+                if (tag === 'College Approved') {
+                    colorClass = 'bg-green-100 text-green-700 font-semibold';
+                } else if (tag === 'Credit Bearing') {
+                    colorClass = 'bg-blue-100 text-blue-700 font-semibold';
+                } else if (tag === 'Stipend Provided') {
+                    colorClass = 'bg-purple-100 text-purple-700 font-semibold';
+                } else if (tag === 'Unpaid') {
+                    colorClass = 'bg-yellow-100 text-yellow-700 font-semibold';
+                }
+                
+                return `<span class="px-2 py-0.5 text-xs rounded-md ${colorClass} whitespace-nowrap">${tag}</span>`;
+            }).join('');
+
+            return `
+                <div class="internship-card p-6 bg-white rounded-xl shadow-lg flex flex-col md:flex-row justify-between items-start space-y-3 transition duration-300 hover:shadow-xl">
+                    <div class="flex-grow">
+                        <div class="flex items-center space-x-3 mb-1">
+                            <h2 class="text-2xl font-bold text-gray-900">${internship.title}</h2>
+                            <span class="text-sm font-semibold text-teal-600 bg-teal-100 px-3 py-1 rounded-full">${internship.stipend}</span>
+                        </div>
+                        <p class="text-sm font-medium text-blue-600 mb-3">${internship.company}</p>
+                        <div class="flex flex-wrap space-x-2 space-y-1 mb-3">
+                            ${tagHTML}
+                        </div>
+                        <p class="text-sm text-gray-700 leading-relaxed">${internship.details}</p>
+                    </div>
+                    <button class="bg-blue-600 text-white font-semibold py-2 px-6 rounded-lg shadow-md hover:bg-blue-700 transition duration-300 flex-shrink-0 w-full md:w-auto" onclick="handleApply(${internship.id})">
+                        Quick Apply
+                    </button>
+                </div>
+            `;
+        }
+
+        /**
+         * Main function to filter and render internships.
+         */
+        function filterInternships() {
+            const keyword = document.getElementById('searchInput').value.toLowerCase();
+            const container = document.getElementById('internship-listings');
+            const noResults = document.getElementById('noResults');
+            
+            const filteredList = MOCK_INTERNSHIPS.filter(job => {
+                const keywordMatch = job.title.toLowerCase().includes(keyword) ||
+                                     job.company.toLowerCase().includes(keyword) ||
+                                     job.details.toLowerCase().includes(keyword);
+
+                const filterMatch = activeFilters.size === 0 || 
+                                    Array.from(activeFilters).every(filter => job.tags.includes(filter) || 
+                                        job.stipend.toLowerCase().includes(filter.toLowerCase()) || 
+                                        job.tags.some(tag => tag.toLowerCase() === filter.toLowerCase())
+                                    );
+
+                return keywordMatch && filterMatch;
+            });
+
+            container.innerHTML = filteredList.map(createInternshipCard).join('');
+            
+            // Show/hide no results message
+            if (filteredList.length === 0) {
+                noResults.classList.remove('hidden');
+            } else {
+                noResults.classList.add('hidden');
+            }
+        }
+
+        /**
+         * Handles the Quick Apply button click (MVP placeholder).
+         */
+        function handleApply(id) {
+            const job = MOCK_INTERNSHIPS.find(j => j.id === id);
+            alert(`Application for "${job.title}" at ${job.company} submitted! You can track its status in the "My Applications" tab.`);
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderFilters();
+            filterInternships(); 
+        });
+
+    </script>
+</body>
+</html>
