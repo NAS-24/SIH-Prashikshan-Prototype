@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Prashikhan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f0f2f5;
+        }
+
+        .header {
+            background: #1e293b;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            border-radius: 8px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e7ff;
+        }
+
+        .navbar {
+            background: #1e293b;
+            padding: 0 40px;
+            border-top: 1px solid #334155;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 15px 25px;
+            display: block;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #334155;
+        }
+
+        .nav-links a.active {
+            color: white;
+            background: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #1e293b;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            padding: 30px;
+            border-radius: 12px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            opacity: 0.9;
+        }
+
+        .stat-content h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
+
+        .stat-content .stat-number {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .alert-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ef4444;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 400px 1fr;
+            gap: 30px;
+        }
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: #1e293b;
+        }
+
+        .action-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 15px;
+        }
+
+        .action-item:last-child {
+            border-bottom: none;
+        }
+
+        .action-number {
+            color: #64748b;
+            font-weight: 600;
+            min-width: 20px;
+        }
+
+        .action-text {
+            flex: 1;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .due-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>Prashikhan</span>
+        </div>
+        <div class="user-profile">
+            <div class="user-avatar"></div>
+            <span>Raj Patel</span>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="industry_dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="internship-posting.html">Internship Posting</a></li>
+            <li><a href="applicant-review.html">Applicant Review (ATS)</a></li>
+            <li><a href="logbook-verification.html">Logbook Verification</a></li>
+            <li><a href="account-settings.html">Account Settings</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <h1>Welcome Back, Raj Patel!</h1>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon">💼</div>
+                <div class="stat-content">
+                    <h3>Active Openings</h3>
+                    <div class="stat-number">3</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">👤</div>
+                <div class="stat-content">
+                    <h3>New Applicants</h3>
+                    <div class="stat-number">12</div>
+                </div>
+            </div>
+
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-content">
+                    <h3>Logbooks Pending</h3>
+                    <div class="stat-number">4</div>
+                </div>
+                <div class="alert-badge">!</div>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2>Action Center</h2>
+                <div class="action-item">
+                    <span class="action-number">1.</span>
+                    <span class="action-text">Review 5 new applicants for "Digital Marketing Intern"</span>
+                </div>
+                <div class="action-item">
+                    <span class="action-number">2.</span>
+                    <div class="action-text">
+                        Verify logbook submission for "Priya Sharma" 
+                        <span class="due-badge">Due Today</span>
+                    </div>
+                </div>
+                <div class="action-item">
+                    <span class="action-number">3.</span>
+                    <span class="action-text">Your opening for "Product Manager Intern" expires in 7 days.</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2>Active Openings Summary</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date Posted</th>
+                            <th>Total Applicants</th>
+                            <th>Status</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Digital Marketing Intern</td>
+                            <td>2023-10-26</td>
+                            <td>7</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td><button class="btn btn-primary">View Applicants</button></td>
+                        </tr>
+                        <tr>
+                            <td>Data Analytics Intern</td>
+                            <td>2023-10-20</td>
+                            <td>5</td>
+                            <td><span class="status-badge status-active">Active</span></td>
+                            <td><button class="btn btn-primary">View Applicants</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <h2 style="margin-top: 40px;">Pending Logbook List</h2>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Week</th>
+                            <th>Total Submission Date</th>
+                            <th>Submission Date</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>Priya Sharma</td>
+                            <td>Week 8</td>
+                            <td>2023-12-10</td>
+                            <td></td>
+                            <td><button class="btn btn-primary">Verify Now</button></td>
+                        </tr>
+                        <tr>
+                            <td>Amit Singh</td>
+                            <td>Week 7</td>
+                            <td>2023-12-10</td>
+                            <td></td>
+                            <td><button class="btn btn-primary">Verify Now</button></td>
+                        </tr>
+                        <tr>
+                            <td>Fatima Khan</td>
+                            <td>Week 7</td>
+                            <td>2023-19-09</td>
+                            <td></td>
+                            <td><button class="btn btn-primary">Verify Now</button></td>
+                        </tr>
+                        <tr>
+                            <td>Fatima Khan</td>
+                            <td>Week 6</td>
+                            <td>2023-12-08</td>
+                            <td></td>
+                            <td><button class="btn btn-primary">Verify Now</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

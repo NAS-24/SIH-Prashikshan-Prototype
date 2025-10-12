@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Applicant Review - Prashikhan</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; }
+        .header { background: #1e293b; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; color: white; }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 600; }
+        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6, #06b6d4); border-radius: 8px; }
+        .user-section { display: flex; align-items: center; gap: 20px; }
+        .search-box { position: relative; }
+        .search-box input { padding: 8px 35px 8px 15px; border: none; border-radius: 6px; width: 200px; }
+        .search-icon { position: absolute; right: 10px; top: 50%; transform: translateY(-50%); color: #64748b; }
+        .user-profile { display: flex; align-items: center; gap: 10px; }
+        .user-avatar { width: 40px; height: 40px; border-radius: 50%; background: #e0e7ff; }
+        .navbar { background: #1e293b; padding: 0 40px; border-top: 1px solid #334155; }
+        .nav-links { display: flex; gap: 0; list-style: none; }
+        .nav-links a { color: #94a3b8; text-decoration: none; padding: 15px 25px; display: block; transition: all 0.3s; }
+        .nav-links a:hover { color: white; background: #334155; }
+        .nav-links a.active { color: white; background: #3b82f6; }
+        .container { padding: 40px; max-width: 1400px; margin: 0 auto; }
+        h1 { font-size: 32px; margin-bottom: 20px; color: #1e293b; }
+        .section-title { font-size: 16px; margin: 30px 0 15px 0; color: #64748b; font-weight: 500; }
+        .dropdown { width: 100%; padding: 12px 16px; border: 2px solid #cbd5e1; border-radius: 8px; background: white; margin-bottom: 30px; font-size: 15px; cursor: pointer; }
+        .applicants-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 25px; }
+        .applicant-card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.1); }
+        .applicant-header { display: flex; align-items: center; gap: 15px; margin-bottom: 20px; }
+        .applicant-avatar { width: 50px; height: 50px; border-radius: 50%; background: #e0e7ff; }
+        .applicant-name { font-size: 20px; font-weight: 600; color: #1e293b; }
+        .applicant-info { color: #64748b; font-size: 14px; margin-bottom: 5px; }
+        .button-group { display: flex; gap: 10px; margin-top: 20px; }
+        .btn { padding: 10px 20px; border-radius: 6px; border: none; font-weight: 600; cursor: pointer; font-size: 14px; flex: 1; transition: all 0.3s; }
+        .btn-primary { background: #3b82f6; color: white; }
+        .btn-primary:hover { background: #2563eb; }
+        .btn-secondary { background: #e5e7eb; color: #374151; }
+        .btn-secondary:hover { background: #d1d5db; }
+        .status-text { font-size: 14px; color: #64748b; margin-top: 15px; }
+        .new-badge { background: #3b82f6; color: white; padding: 4px 10px; border-radius: 4px; font-size: 12px; font-weight: 600; margin-top: 10px; display: inline-block; }
+        .view-all { text-align: right; margin-top: 30px; }
+        .view-all a { color: #3b82f6; text-decoration: none; font-weight: 600; }
+        .view-all a:hover { text-decoration: underline; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo"><div class="logo-icon"></div><span>Prashishan</span></div>
+        <div class="user-section">
+            <div class="search-box">
+                <input type="text" placeholder="Student">
+                <span class="search-icon">🔍</span>
+            </div>
+            <button class="btn btn-primary">Applicant Review (ATS)</button>
+        </div>
+    </div>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="industry_dashboard.html">Dashboard</a></li>
+            <li><a href="internship-posting.html">Internship Posting</a></li>
+            <li><a href="applicant-review.html" class="active">Applicant Review (ATS)</a></li>
+            <li><a href="logbook-verification.html">Logbook Verification</a></li>
+            <li><a href="account-settings.html">Account Settings</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <h1>Applicant Review (ATS)</h1>
+        <p class="section-title">Select an Opening</p>
+        <select class="dropdown">
+            <option>Digital Marketing Intern (Posted: 2023-10-26)</option>
+        </select>
+        <p class="section-title">Applicant Sats</p>
+        <div class="applicants-grid">
+            <div class="applicant-card">
+                <div class="applicant-header">
+                    <div class="applicant-avatar"></div>
+                    <div class="applicant-name">Priya Sharma</div>
+                </div>
+                <p class="applicant-info">Major: BBA (Marketing)</p>
+                <p class="applicant-info">Applied: 2023-11-01</p>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">View Profile & Resume</button>
+            </div>
+            <div class="applicant-card">
+                <div class="applicant-header">
+                    <div class="applicant-name">Amit Singh</div>
+                </div>
+                <p class="applicant-info">Major: BBA (Marketing)</p>
+                <p class="applicant-info">Applied: 2023-11-01</p>
+            </div>
+            <div class="applicant-card">
+                <div class="applicant-header">
+                    <div class="applicant-name">Fatima Khan</div>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary">Accept</button>
+                    <button class="btn btn-secondary">Reject</button>
+                </div>
+                <p class="status-text">Viewed &nbsp;&nbsp;&nbsp; Reject</p>
+                <div class="new-badge">New Application</div>
+            </div>
+            <div class="applicant-card">
+                <div class="applicant-header">
+                    <div class="applicant-name">Amit Singh</div>
+                </div>
+                <p class="applicant-info">Major: BBA (Marketing)</p>
+                <p class="applicant-info">Applied: 2023-11-01</p>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">View Profile & Resume</button>
+            </div>
+            <div class="applicant-card">
+                <div class="applicant-header">
+                    <div class="applicant-name">Fatima Khan</div>
+                </div>
+                <p class="applicant-info">Major: BBA (Marketing)</p>
+                <p class="applicant-info">Applied: 2023-11-01</p>
+                <button class="btn btn-primary" style="width: 100%; margin-top: 20px;">View Profile & Resume</button>
+            </div>
+            <div class="applicant-card">
+                <div class="applicant-header">
+                    <div class="applicant-avatar"></div>
+                    <div class="applicant-name">Rajseh Kumar</div>
+                </div>
+                <div class="button-group">
+                    <button class="btn btn-primary">Accept</button>
+                    <button class="btn btn-secondary">Reject</button>
+                </div>
+                <p class="status-text">Rejected &nbsp;&nbsp;&nbsp; Accepted</p>
+                <div class="new-badge">New Application</div>
+            </div>
+        </div>
+        <div class="view-all">
+            <a href="#">View All 12 Applicants</a>
+        </div>
+    </div>
+</body>
+</html>
