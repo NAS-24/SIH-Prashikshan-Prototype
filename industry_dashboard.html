@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Prashikhan</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+            background: #f0f2f5;
+        }
+
+        .header {
+            background: #1e293b;
+            padding: 15px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 24px;
+            font-weight: 600;
+        }
+
+        .logo-icon {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #3b82f6, #06b6d4);
+            border-radius: 8px;
+        }
+
+        .user-profile {
+            display: flex;
+            align-items: center;
+            gap: 15px; /* Increased gap */
+        }
+
+        .user-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background: #e0e7ff;
+        }
+
+        .logout-link {
+            color: #f87171; /* Red color for logout */
+            text-decoration: none;
+            font-weight: 600;
+            transition: color 0.3s;
+            font-size: 14px;
+        }
+
+        .logout-link:hover {
+            color: #ef4444;
+        }
+
+        .navbar {
+            background: #1e293b;
+            padding: 0 40px;
+            border-top: 1px solid #334155;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 0;
+            list-style: none;
+        }
+
+        .nav-links a {
+            color: #94a3b8;
+            text-decoration: none;
+            padding: 15px 25px;
+            display: block;
+            transition: all 0.3s;
+            border-bottom: 3px solid transparent;
+        }
+
+        .nav-links a:hover {
+            color: white;
+            background: #334155;
+        }
+
+        .nav-links a.active {
+            color: white;
+            background: #3b82f6;
+            border-bottom-color: #3b82f6;
+        }
+
+        .container {
+            padding: 40px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        h1 {
+            font-size: 32px;
+            margin-bottom: 30px;
+            color: #1e293b;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(1, 1fr);
+            gap: 25px;
+            margin-bottom: 40px;
+        }
+        @media (min-width: 768px) {
+            .stats-grid {
+                grid-template-columns: repeat(3, 1fr);
+            }
+        }
+
+        .stat-card {
+            background: linear-gradient(135deg, #3b82f6, #60a5fa);
+            padding: 30px;
+            border-radius: 12px;
+            color: white;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            position: relative;
+            transition: transform 0.2s;
+            box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        .stat-card:hover {
+             transform: translateY(-5px);
+        }
+
+        .stat-icon {
+            font-size: 48px;
+            opacity: 0.9;
+        }
+
+        .stat-content h3 {
+            font-size: 16px;
+            font-weight: 500;
+            margin-bottom: 8px;
+            opacity: 0.95;
+        }
+
+        .stat-content .stat-number {
+            font-size: 40px;
+            font-weight: 700;
+        }
+
+        .alert-badge {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: #ef4444;
+            width: 28px;
+            height: 28px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            font-size: 16px;
+            box-shadow: 0 0 10px rgba(239, 68, 68, 0.5);
+        }
+
+        .content-grid {
+            display: grid;
+            grid-template-columns: 1fr;
+            gap: 30px;
+        }
+        @media (min-width: 1024px) {
+             .content-grid {
+                grid-template-columns: 400px 1fr;
+            }
+        }
+
+
+        .card {
+            background: white;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+
+        .card h2 {
+            font-size: 22px;
+            margin-bottom: 25px;
+            color: #1e293b;
+            border-bottom: 2px solid #f1f5f9;
+            padding-bottom: 10px;
+        }
+
+        .action-item {
+            padding: 15px 0;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            gap: 15px;
+            cursor: pointer;
+            transition: background 0.1s;
+        }
+        .action-item:hover {
+            background: #f8fafc;
+        }
+
+
+        .action-item:last-child {
+            border-bottom: none;
+        }
+
+        .action-number {
+            color: #64748b;
+            font-weight: 600;
+            min-width: 20px;
+        }
+
+        .action-text {
+            flex: 1;
+            color: #334155;
+            line-height: 1.6;
+        }
+
+        .due-badge {
+            background: #3b82f6;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 13px;
+            font-weight: 600;
+            margin-left: 10px;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 20px;
+        }
+
+        th {
+            background: #f1f5f9;
+            padding: 12px;
+            text-align: left;
+            font-weight: 600;
+            color: #475569;
+            font-size: 14px;
+        }
+
+        td {
+            padding: 15px 12px;
+            border-bottom: 1px solid #e2e8f0;
+            color: #334155;
+        }
+
+        .btn {
+            padding: 8px 18px;
+            border-radius: 6px;
+            border: none;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s;
+        }
+
+        .btn-primary {
+            background: #3b82f6;
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: #2563eb;
+            box-shadow: 0 2px 5px rgba(59, 130, 246, 0.4);
+        }
+
+        .status-badge {
+            padding: 6px 14px;
+            border-radius: 6px;
+            font-size: 13px;
+            font-weight: 600;
+        }
+
+        .status-active {
+            background: #dbeafe;
+            color: #1e40af;
+        }
+
+        /* Message Box / Toast */
+        #message-box {
+            position: fixed;
+            bottom: 20px;
+            right: 20px;
+            background: #10b981;
+            color: white;
+            padding: 15px 25px;
+            border-radius: 8px;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            z-index: 1000;
+            opacity: 0;
+            visibility: hidden;
+            transform: translateY(100%);
+            transition: all 0.4s ease-out;
+        }
+        #message-box.show {
+            opacity: 1;
+            visibility: visible;
+            transform: translateY(0);
+        }
+        
+        /* New Styles for Search */
+        .search-container {
+            margin-bottom: 20px;
+        }
+        .search-input {
+            width: 100%;
+            padding: 12px 15px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            font-size: 16px;
+            transition: border-color 0.2s;
+        }
+        .search-input:focus {
+            outline: none;
+            border-color: #3b82f6;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo">
+            <div class="logo-icon"></div>
+            <span>Prashikhan</span>
+        </div>
+        <div class="user-profile">
+            <!-- Updated to "Industry Partner" -->
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <a href="#" class="logout-link" style="color: white; font-size: 16px;">Industry Partner</a>
+                <a href="index.html" class="logout-link">Logout</a>
+            </div>
+        </div>
+    </div>
+
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="industry_dashboard.html" class="active">Dashboard</a></li>
+            <li><a href="internship-posting.html">Internship Posting</a></li>
+            <li><a href="applicant-review.html">Applicant Review (ATS)</a></li>
+            <li><a href="logbook-verification.html">Logbook Verification</a></li>
+            <li><a href="account-settings.html">Account Settings</a></li>
+        </ul>
+    </nav>
+
+    <div class="container">
+        <!-- Updated to "Industry Partner" -->
+        <h1>Welcome Back, Industry Partner!</h1>
+
+        <div class="stats-grid">
+            <!-- Stat Card 1 -->
+            <div class="stat-card">
+                <div class="stat-icon">💼</div>
+                <div class="stat-content">
+                    <h3>Active Openings</h3>
+                    <div class="stat-number">3</div>
+                </div>
+            </div>
+
+            <!-- Stat Card 2 -->
+            <div class="stat-card">
+                <div class="stat-icon">👤</div>
+                <div class="stat-content">
+                    <h3>New Applicants</h3>
+                    <div class="stat-number">12</div>
+                </div>
+                <button onclick="viewApplicants()" class="btn btn-primary" style="position: absolute; bottom: 10px; right: 10px; padding: 6px 12px;">View</button>
+            </div>
+
+            <!-- Stat Card 3 - Pending Logbooks -->
+            <div class="stat-card">
+                <div class="stat-icon">📋</div>
+                <div class="stat-content">
+                    <h3>Logbooks Pending</h3>
+                    <div class="stat-number">4</div>
+                </div>
+                <div class="alert-badge">4</div>
+                <button onclick="verifyLogbooks()" class="btn btn-primary" style="position: absolute; bottom: 10px; right: 10px; padding: 6px 12px;">Verify</button>
+            </div>
+        </div>
+
+        <div class="content-grid">
+            <div class="card">
+                <h2>Action Center</h2>
+                <div class="action-item" onclick="reviewApplicants(5, 'Digital Marketing Intern')">
+                    <span class="action-number">1.</span>
+                    <span class="action-text">Review 5 new applicants for "Digital Marketing Intern"</span>
+                </div>
+                <div class="action-item" onclick="verifyLogbook('Priya Sharma')">
+                    <span class="action-number">2.</span>
+                    <div class="action-text">
+                        Verify logbook submission for "Priya Sharma" 
+                        <span class="due-badge">Due Today</span>
+                    </div>
+                </div>
+                <div class="action-item" onclick="extendOpening('Product Manager Intern')">
+                    <span class="action-number">3.</span>
+                    <span class="action-text">Your opening for "Product Manager Intern" expires in 7 days.</span>
+                </div>
+            </div>
+
+            <div class="card">
+                <h2 id="activeOpeningsTitle">Active Openings Summary</h2>
+                <div class="search-container">
+                    <input type="text" id="openingsSearch" class="search-input" placeholder="Search Openings by Title..." onkeyup="filterTable('openingsTableBody', this.value)">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Title</th>
+                            <th>Date Posted</th>
+                            <th>Applicants</th>
+                            <th>Status</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="openingsTableBody">
+                        <!-- Mock data rendered by JS -->
+                    </tbody>
+                </table>
+                <div id="openingsEmptyState" style="text-align: center; padding: 20px; color: #64748b; font-style: italic;" class="hidden">No active openings match your search.</div>
+
+                <h2 style="margin-top: 40px;" id="pendingLogbookTitle">Pending Logbook List</h2>
+                <div class="search-container">
+                    <input type="text" id="logbooksSearch" class="search-input" placeholder="Search Logbooks by Student Name..." onkeyup="filterTable('logbooksTableBody', this.value)">
+                </div>
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Student Name</th>
+                            <th>Week</th>
+                            <th>Due Date</th>
+                            <th>Submitted Date</th>
+                            <th>Action</th>
+                        </tr>
+                    </thead>
+                    <tbody id="logbooksTableBody">
+                        <!-- Mock data rendered by JS -->
+                    </tbody>
+                </table>
+                 <div id="logbooksEmptyState" style="text-align: center; padding: 20px; color: #64748b; font-style: italic;" class="hidden">No pending logbooks match your search.</div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Message Box Element -->
+    <div id="message-box"></div>
+
+    <script>
+        // --- MOCK DATA ---
+        const OPENINGS_DATA = [
+            { title: "Digital Marketing Intern", posted: "2023-10-26", applicants: 7, status: "Active" },
+            { title: "Data Analytics Intern", posted: "2023-10-20", applicants: 5, status: "Active" },
+            { title: "Product Manager Intern", posted: "2023-11-01", applicants: 0, status: "Expiring" },
+            { title: "Frontend Developer", posted: "2023-09-15", applicants: 15, status: "Active" },
+        ];
+
+        const LOGBOOKS_DATA = [
+            { student: "Priya Sharma", week: "Week 8", due: "2023-12-10", submitted: "N/A" },
+            { student: "Amit Singh", week: "Week 7", due: "2023-12-10", submitted: "N/A" },
+            { student: "Fatima Khan", week: "Week 7", due: "2023-09-19", submitted: "N/A" },
+            { student: "Fatima Khan", week: "Week 6", due: "2023-12-08", submitted: "N/A" },
+            { student: "Vikram Reddy", week: "Week 9", due: "2024-01-05", submitted: "N/A" },
+        ];
+
+
+        /**
+         * Displays a non-intrusive message box (toast).
+         * @param {string} message - The content of the message.
+         */
+        function showMessage(message) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.classList.add('show');
+            
+            // Auto-hide after 3 seconds
+            setTimeout(() => {
+                msgBox.classList.remove('show');
+            }, 3000);
+        }
+
+        // --- RENDER FUNCTIONS ---
+
+        function renderOpenings(data = OPENINGS_DATA) {
+            const tbody = document.getElementById('openingsTableBody');
+            tbody.innerHTML = '';
+            
+            if (data.length === 0) {
+                document.getElementById('openingsEmptyState').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('openingsEmptyState').classList.add('hidden');
+
+
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${item.title}</td>
+                    <td>${item.posted}</td>
+                    <td>${item.applicants}</td>
+                    <td><span class="status-badge status-active">${item.status}</span></td>
+                    <td><button class="btn btn-primary" onclick="viewApplicants('${item.title}')">View Applicants</button></td>
+                `;
+            });
+        }
+
+        function renderLogbooks(data = LOGBOOKS_DATA) {
+            const tbody = document.getElementById('logbooksTableBody');
+            tbody.innerHTML = '';
+
+            if (data.length === 0) {
+                document.getElementById('logbooksEmptyState').classList.remove('hidden');
+                return;
+            }
+            document.getElementById('logbooksEmptyState').classList.add('hidden');
+
+            data.forEach(item => {
+                const row = tbody.insertRow();
+                row.innerHTML = `
+                    <td>${item.student}</td>
+                    <td>${item.week}</td>
+                    <td>${item.due}</td>
+                    <td>${item.submitted}</td>
+                    <td><button class="btn btn-primary" onclick="verifyLogbook('${item.student} - ${item.week}')">Verify Now</button></td>
+                `;
+            });
+        }
+        
+        // --- INTERACTION FUNCTIONS ---
+        
+        function reviewApplicants(count, title) {
+            showMessage(`Navigating to review page for ${count} applicants for "${title}"...`);
+            // In a real application, this would redirect to 'applicant-review.html' or open a modal.
+        }
+
+        function verifyLogbook(studentInfo) {
+            showMessage(`Opening Logbook verification for ${studentInfo}...`);
+            // In a real application, this would redirect to 'logbook-verification.html' or open a modal.
+        }
+
+        function extendOpening(title) {
+            showMessage(`Opening form to extend posting for "${title}".`);
+        }
+
+        function viewApplicants(title = "all open positions") {
+             showMessage(`Displaying all applicants for ${title}.`);
+        }
+
+        function verifyLogbooks() {
+             showMessage(`Initiating mass logbook verification process.`);
+        }
+        
+        /**
+         * Generic filter function for tables based on a search keyword.
+         */
+        function filterTable(tableBodyId, keyword) {
+            const filter = keyword.toUpperCase();
+            const dataSet = tableBodyId === 'openingsTableBody' ? OPENINGS_DATA : LOGBOOKS_DATA;
+            const keysToSearch = tableBodyId === 'openingsTableBody' ? ['title', 'status'] : ['student', 'week'];
+
+            const filteredData = dataSet.filter(item => {
+                return keysToSearch.some(key => item[key].toUpperCase().includes(filter));
+            });
+
+            if (tableBodyId === 'openingsTableBody') {
+                renderOpenings(filteredData);
+            } else {
+                renderLogbooks(filteredData);
+            }
+        }
+        
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            renderOpenings();
+            renderLogbooks();
+        });
+        
+    </script>
+</body>
+</html>

@@ -1,0 +1,281 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Prashikshan - Final Report</title>
+    <!-- Load Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap');
+        body { font-family: 'Poppins', sans-serif; }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar: Student Dashboard Navigation -->
+    <nav class="bg-gray-800 shadow-lg sticky top-0 z-20">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16 items-center">
+                <!-- Logo/App Name -->
+                <div class="text-xl font-extrabold text-white">Prashikshan</div>
+                
+                <!-- Navigation Links -->
+                <div class="flex space-x-2 sm:space-x-4 overflow-x-auto">
+                    <a href="student_discover.html" class="text-gray-300 font-medium px-3 py-2 rounded-md hover:text-white transition duration-200 whitespace-nowrap">
+                        Discover Internships
+                    </a>
+                    <a href="student_applications.html" class="text-gray-300 font-medium px-3 py-2 rounded-md hover:text-white transition duration-200 whitespace-nowrap">
+                        My Applications
+                    </a>
+                    <a href="student_logbook.html" class="text-gray-300 font-medium px-3 py-2 rounded-md hover:text-white transition duration-200 whitespace-nowrap">
+                        Digital Logbook
+                    </a>
+                    <a href="student_report.html" class="text-blue-400 font-bold px-3 py-2 rounded-md hover:text-white transition duration-200 border-b-2 border-blue-400 whitespace-nowrap">
+                        Final Report
+                    </a>
+                </div>
+                
+                <!-- User/Profile placeholder -->
+               <a href="index.html" class="text-gray-300 text-sm hidden sm:block hover:text-white transition duration-200">
+                    Student User (MVP) (Log Out)
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content Area -->
+    <main class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-10">
+        
+        <h1 class="text-4xl font-extrabold text-gray-900 mb-4">Final Report - Completion & Grading</h1>
+        <p class="text-lg text-gray-600 mb-8">
+            This page manages the final step of the internship workflow, generating the compliance report and closing out the credit process.
+        </p>
+
+        <!-- Current Internship Card (Minimal) -->
+        <div class="bg-blue-50 border-l-4 border-blue-500 p-4 rounded-lg mb-10 shadow-md">
+            <p class="text-sm font-semibold text-gray-700">Current Internship: 
+                <span class="text-blue-700">Digital Marketing Intern</span> at Seguitems.com (3 Months)
+            </p>
+        </div>
+
+        <!-- Report Generation Tool -->
+        <section class="bg-white p-8 rounded-xl shadow-lg mb-10 border border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Report Generation Tool</h2>
+            
+            <div class="space-y-4">
+                <!-- Compliance Check 1: Logbook Completion -->
+                <div id="checkLogbook" class="flex items-center justify-between p-4 border rounded-lg bg-yellow-50 text-yellow-800">
+                    <span class="font-medium flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm1-12a1 1 0 10-2 0v5a1 1 0 001 1h2a1 1 0 100-2h-1V6z" clip-rule="evenodd"></path></svg>
+                        Logbook Status: 
+                    </span>
+                    <span id="logbookStatusText" class="font-bold">3/12 Entries Approved</span>
+                </div>
+
+                <!-- Compliance Check 2: Supervisor Evaluation -->
+                <div id="checkEvaluation" class="flex items-center justify-between p-4 border rounded-lg bg-green-50 text-green-800">
+                    <span class="font-medium flex items-center">
+                        <svg class="w-5 h-5 mr-2" fill="currentColor" viewBox="0 0 20 20"><path fill-rule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586l-1.707-1.707a1 1 0 10-1.414 1.414l2.5 2.5a1 1 0 001.414 0l4-4z" clip-rule="evenodd"></path></svg>
+                        Supervisor Evaluation:
+                    </span>
+                    <span id="evaluationStatusText" class="font-bold">RECEIVED (Final Rating: 8/10)</span>
+                </div>
+            </div>
+
+            <div class="mt-8 pt-6 border-t border-gray-200 flex justify-between items-center">
+                <div id="finalStatus" class="text-lg font-semibold text-gray-700">
+                    Ready for Generation: <span class="text-red-500">No</span>
+                </div>
+                
+                <button id="generateButton" onclick="generateReport()" class="bg-gray-400 text-white font-bold py-3 px-8 rounded-lg shadow-md transition duration-200 cursor-not-allowed" disabled>
+                    Generate Report
+                </button>
+            </div>
+        </section>
+
+        <!-- Report Details & Submission Status -->
+        <section class="bg-white p-8 rounded-xl shadow-lg border border-gray-200">
+            <h2 class="text-2xl font-bold text-gray-900 mb-6">Submission Status</h2>
+            
+            <table class="min-w-full divide-y divide-gray-200">
+                <thead class="bg-gray-50">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Metric</th>
+                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Status/Value</th>
+                    </tr>
+                </thead>
+                <tbody class="bg-white divide-y divide-gray-200 text-sm text-gray-700">
+                    <tr>
+                        <td class="px-6 py-4 font-medium">Required Credit Hours</td>
+                        <td class="px-6 py-4">360 Hours (NEP Standard)</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-medium">Verified Logged Hours</td>
+                        <td id="verifiedHours" class="px-6 py-4 text-yellow-600 font-semibold">120 / 360 Hours</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-medium">Final Report PDF Generated?</td>
+                        <td id="pdfGenerated" class="px-6 py-4 text-red-500 font-semibold">No</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-medium">Submitted to Faculty?</td>
+                        <td id="submittedStatus" class="px-6 py-4 text-red-500 font-semibold">No</td>
+                    </tr>
+                    <tr>
+                        <td class="px-6 py-4 font-medium">Final Grade Awarded</td>
+                        <td id="finalGrade" class="px-6 py-4 text-gray-500 italic">Pending Faculty Review</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div id="submissionContainer" class="mt-6 hidden">
+                 <button onclick="submitToFaculty()" class="w-full bg-teal-600 text-white font-bold py-3 rounded-lg shadow-xl hover:bg-teal-700 transition duration-200">
+                    Submit Final Report to Faculty
+                </button>
+                <p class="text-xs text-gray-500 mt-2 text-center">Note: This action is final and locks the logbook.</p>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-gray-300 py-4 mt-12">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between text-xs sm:text-sm">
+            <div>&copy; 2025 Prashikshan. All rights reserved.</div>
+            <div class="space-x-4 hidden sm:block">
+                <a href="#" class="hover:text-white">Contact</a>
+                <a href="#" class="hover:text-white">Privacy Policy</a>
+                <a href="#" class="hover:text-white">Terms of Service</a>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        // --- Mock State ---
+        let MOCK_REPORT_STATE = {
+            LOGBOOK_APPROVED_WEEKS: 3,
+            TOTAL_WEEKS_REQUIRED: 12, // Assuming 3 months * 4 weeks
+            VERIFIED_HOURS: 120, // 3 approved weeks * 40 hours
+            MIN_HOURS_REQUIRED: 360,
+            SUPERVISOR_EVAL_RECEIVED: true,
+            REPORT_GENERATED: false,
+            SUBMITTED_TO_FACULTY: false
+        };
+
+        // --- DOM Elements ---
+        const logbookStatusText = document.getElementById('logbookStatusText');
+        const checkLogbook = document.getElementById('checkLogbook');
+        const checkEvaluation = document.getElementById('checkEvaluation');
+        const finalStatus = document.getElementById('finalStatus');
+        const generateButton = document.getElementById('generateButton');
+        const submissionContainer = document.getElementById('submissionContainer');
+        const verifiedHours = document.getElementById('verifiedHours');
+        const pdfGenerated = document.getElementById('pdfGenerated');
+        const submittedStatus = document.getElementById('submittedStatus');
+        
+        /**
+         * Checks the compliance status and enables the generation button.
+         */
+        function checkCompliance() {
+            let isLogbookComplete = MOCK_REPORT_STATE.VERIFIED_HOURS >= MOCK_REPORT_STATE.MIN_HOURS_REQUIRED;
+            let isEvalReceived = MOCK_REPORT_STATE.SUPERVISOR_EVAL_RECEIVED;
+            
+            // 1. Update Logbook Check Visual
+            if (isLogbookComplete) {
+                checkLogbook.className = "flex items-center justify-between p-4 border rounded-lg bg-green-50 text-green-800";
+                logbookStatusText.innerHTML = `${MOCK_REPORT_STATE.VERIFIED_HOURS} / ${MOCK_REPORT_STATE.MIN_HOURS_REQUIRED} Hours Complete`;
+            } else {
+                checkLogbook.className = "flex items-center justify-between p-4 border rounded-lg bg-red-50 text-red-800";
+                logbookStatusText.innerHTML = `INCOMPLETE: ${MOCK_REPORT_STATE.VERIFIED_HOURS} / ${MOCK_REPORT_STATE.MIN_HOURS_REQUIRED} Hours Logged`;
+            }
+
+            // 2. Update Evaluation Check Visual (If not received, change to red)
+            if (!isEvalReceived) {
+                checkEvaluation.className = "flex items-center justify-between p-4 border rounded-lg bg-red-50 text-red-800";
+                evaluationStatusText.textContent = "PENDING: Supervisor has not submitted evaluation.";
+            }
+
+            // 3. Enable Generate Button if all requirements met
+            if (isLogbookComplete && isEvalReceived && !MOCK_REPORT_STATE.SUBMITTED_TO_FACULTY) {
+                generateButton.disabled = false;
+                generateButton.className = "bg-blue-600 text-white font-bold py-3 px-8 rounded-lg shadow-md hover:bg-blue-700 transition duration-200";
+                finalStatus.innerHTML = 'Ready for Generation: <span class="text-green-500">Yes</span>';
+            } else {
+                 finalStatus.innerHTML = 'Ready for Generation: <span class="text-red-500">No</span>';
+            }
+
+             // 4. Update table metrics
+            verifiedHours.textContent = `${MOCK_REPORT_STATE.VERIFIED_HOURS} / ${MOCK_REPORT_STATE.MIN_HOURS_REQUIRED} Hours`;
+        }
+
+        /**
+         * Simulates the report generation process.
+         */
+        function generateReport() {
+            if (MOCK_REPORT_STATE.REPORT_GENERATED) {
+                 alert("Report already generated! Please click Submit.");
+                 return;
+            }
+            
+            // Simulation
+            alert("Generating NEP-compliant report PDF... (This would compile all approved logbook entries)");
+            
+            // Update state
+            MOCK_REPORT_STATE.REPORT_GENERATED = true;
+
+            // Update UI
+            pdfGenerated.textContent = "Yes (Download Link)";
+            pdfGenerated.className = "px-6 py-4 text-green-600 font-semibold";
+            generateButton.disabled = true;
+            generateButton.className = "bg-gray-400 text-white font-bold py-3 px-8 rounded-lg shadow-md cursor-not-allowed";
+            
+            // Show the final submission button
+            submissionContainer.classList.remove('hidden');
+        }
+
+        /**
+         * Simulates submitting the report to the faculty.
+         */
+        function submitToFaculty() {
+             if (!MOCK_REPORT_STATE.REPORT_GENERATED) {
+                 alert("Error: Please generate the final report PDF first.");
+                 return;
+             }
+
+             if (MOCK_REPORT_STATE.SUBMITTED_TO_FACULTY) {
+                 alert("Report already submitted.");
+                 return;
+             }
+
+             // Simulation
+             alert("Report successfully submitted to Faculty Mentor for final review and grading.");
+
+             // Update state
+             MOCK_REPORT_STATE.SUBMITTED_TO_FACULTY = true;
+
+             // Update UI
+             submittedStatus.textContent = "Yes (Awaiting Grade)";
+             submittedStatus.className = "px-6 py-4 text-blue-600 font-semibold";
+             submissionContainer.classList.add('hidden');
+             finalStatus.innerHTML = 'Submission Status: <span class="text-blue-500">Awaiting Final Grade</span>';
+             
+             // Optionally, simulate grade received after 5 seconds
+             setTimeout(() => {
+                 document.getElementById('finalGrade').textContent = "A (Excellent)";
+                 document.getElementById('finalGrade').className = "px-6 py-4 text-green-600 font-extrabold";
+                 finalStatus.innerHTML = 'Submission Status: <span class="text-green-700">Grading Complete</span>';
+             }, 5000);
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            // For MVP demonstration, simulate full hours and checks required
+            MOCK_REPORT_STATE.VERIFIED_HOURS = 360; 
+            checkCompliance(); 
+        });
+
+    </script>
+</body>
+</html>
