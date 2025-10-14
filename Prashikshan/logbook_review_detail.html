@@ -1,0 +1,237 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Logbook Entry</title>
+    <style>
+        /* General Reset and Base Styles */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body { font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; background: #f0f2f5; }
+        
+        /* Header and Navigation Styles */
+        .header { background: #1e293b; padding: 15px 40px; display: flex; justify-content: space-between; align-items: center; color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); }
+        .logo { display: flex; align-items: center; gap: 10px; font-size: 24px; font-weight: 600; }
+        .logo-icon { width: 40px; height: 40px; background: linear-gradient(135deg, #3b82f6, #06b6d4); border-radius: 8px; }
+        .user-profile { display: flex; align-items: center; gap: 15px; }
+        .logout-link { color: #f87171; text-decoration: none; font-weight: 600; transition: color 0.3s; font-size: 14px; }
+        .logout-link:hover { color: #ef4444; }
+        .navbar { background: #1e293b; padding: 0 40px; border-top: 1px solid #334155; }
+        .nav-links { display: flex; gap: 0; list-style: none; }
+        .nav-links a { color: #94a3b8; text-decoration: none; padding: 15px 25px; display: block; transition: all 0.3s; border-bottom: 3px solid transparent; }
+        .nav-links a.active { color: white; background: #3b82f6; border-bottom-color: #3b82f6; }
+        
+        /* Main Content and Layout */
+        .container { padding: 40px; max-width: 1200px; margin: 0 auto; }
+        h1 { font-size: 32px; margin-bottom: 20px; color: #1e293b; }
+        .back-link { color: #3b82f6; text-decoration: none; font-weight: 600; margin-bottom: 20px; display: inline-block; }
+        .card { background: white; padding: 30px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1); }
+        
+        /* Logbook Details */
+        .log-grid { display: grid; grid-template-columns: 1fr; gap: 30px; }
+        @media (min-width: 900px) {
+            .log-grid { grid-template-columns: 2fr 1fr; }
+        }
+        
+        .entry-section h2 { font-size: 24px; color: #1e293b; margin-bottom: 15px; }
+        .entry-box { border: 1px solid #e2e8f0; padding: 20px; border-radius: 8px; margin-bottom: 20px; }
+        .entry-box h3 { font-size: 18px; color: #334155; margin-bottom: 10px; border-bottom: 1px solid #f1f5f9; padding-bottom: 8px; }
+        .entry-box p { color: #334155; line-height: 1.6; font-size: 15px; }
+        .status-badge { background: #f59e0b; color: white; padding: 6px 14px; border-radius: 6px; font-size: 14px; font-weight: 600; }
+
+        /* Action Panel */
+        .action-panel { background: #f8fafc; padding: 20px; border-radius: 10px; }
+        .action-panel h3 { font-size: 18px; color: #1e293b; margin-bottom: 15px; }
+        .btn { width: 100%; padding: 12px 0; margin-top: 10px; border-radius: 8px; border: none; font-weight: 700; cursor: pointer; font-size: 16px; transition: all 0.3s; }
+        .btn-approve { background: #10b981; color: white; }
+        .btn-approve:hover { background: #059669; }
+        .btn-reject { background: #ef4444; color: white; }
+        .btn-reject:hover { background: #dc2626; }
+        
+        /* Message Box / Toast */
+        #message-box {
+            position: fixed; bottom: 20px; right: 20px; background: #10b981; color: white; padding: 15px 25px;
+            border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2); z-index: 2000; opacity: 0;
+            visibility: hidden; transform: translateY(100%); transition: all 0.4s ease-out;
+        }
+        #message-box.show { opacity: 1; visibility: visible; transform: translateY(0); }
+        .error-message { background: #ef4444; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="logo"><div class="logo-icon"></div><span>Prashikhan</span></div>
+        <div class="user-profile">
+            <div style="display: flex; align-items: center; gap: 10px;">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" style="width: 24px; height: 24px;">
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                </svg>
+                <a href="#" class="logout-link" style="color: white; font-size: 16px;">Industry Partner</a>
+                <a href="index.html" class="logout-link">Logout</a>
+            </div>
+        </div>
+    </div>
+    <nav class="navbar">
+        <ul class="nav-links">
+            <li><a href="industry_dashboard.html">Dashboard</a></li>
+            <li><a href="internship-posting.html">Internship Posting</a></li>
+            <li><a href="applicant-review.html">Applicant Review (ATS)</a></li>
+            <li><a href="logbook-verification.html" class="active">Logbook Verification</a></li>
+            <li><a href="account-settings.html">Account Settings</a></li>
+        </ul>
+    </nav>
+    <div class="container">
+        <a href="logbook_verification.html" class="back-link">&larr; Back to Pending Logs</a>
+        
+        <h1 id="logbookTitle">Logbook Entry Review</h1>
+        
+        <div class="card">
+            <div class="log-grid">
+                <div class="entry-section">
+                    <h2 id="entryTitle">Week 8 Submission - Priya Sharma</h2>
+                    <p style="margin-bottom: 20px;">
+                        Status: <span id="logStatusBadge" class="status-badge">Pending</span>
+                    </p>
+                    
+                    <div class="entry-box">
+                        <h3>1. Weekly Summary & Accomplishments</h3>
+                        <p id="summaryText">
+                            Successfully completed the A/B testing setup for the new landing page design. Analyzed first three days of data; conversion rate saw a slight dip but click-through rates improved by 5%. Started drafting the Q3 social media strategy document.
+                        </p>
+                    </div>
+
+                    <div class="entry-box">
+                        <h3>2. Challenges & Support Needed</h3>
+                        <p id="challengesText">
+                            Faced difficulty integrating the new analytics tool into the existing infrastructure. Need guidance on handling legacy tracking codes to prevent data duplication. Reached out to IT team but awaiting response.
+                        </p>
+                    </div>
+                     <div class="entry-box">
+                        <h3>3. Goals for Next Week</h3>
+                        <p id="goalsText">
+                            Finalize Q3 social media strategy. Resolve analytics integration issues. Begin competitive analysis for the upcoming product launch keywords.
+                        </p>
+                    </div>
+                </div>
+
+                <div class="action-panel">
+                    <h3 id="actionTitle">Logbook Actions</h3>
+                    
+                    <p style="font-size: 14px; color: #64748b; margin-bottom: 15px;">
+                        By approving, you certify the student's work aligns with expectations for this internship.
+                    </p>
+                    
+                    <button class="btn btn-approve" onclick="handleLogApproval('Approved')">Approve Logbook</button>
+                    <button class="btn btn-reject" onclick="handleLogApproval('Rejected')">Reject & Request Revision</button>
+                    
+                    <div style="margin-top: 30px; border-top: 1px solid #e2e8f0; padding-top: 20px;">
+                        <h4 style="font-size: 16px; color: #1e293b; margin-bottom: 10px;">Submission Details</h4>
+                        <p style="font-size: 14px; color: #334155;">Submitted: <span id="submittedDate">2024-06-25</span></p>
+                        <p style="font-size: 14px; color: #334155;">Due Date: <span id="dueDate">2024-06-25</span></p>
+                        <p style="font-size: 14px; color: #334155;">Student ID: <span id="studentId">1</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div id="message-box"></div>
+
+    <script>
+        // --- MOCK DATA (Should be passed from the verification page logic) ---
+        const MOCK_LOGS = [
+            { id: 1, student: "Priya Sharma", internship: "Digital Marketing Intern", week: 8, submitted: "2024-06-25", due: "2024-06-25", status: "Pending", summary: "Successfully completed the A/B testing setup...", challenges: "Faced difficulty integrating the new analytics tool...", goals: "Finalize Q3 social media strategy." },
+            { id: 3, student: "Amit Singh", internship: "Data Analytics Intern", week: 6, submitted: "2024-06-05", due: "2024-06-01", status: "Overdue", summary: "Completed SQL database migration. Ran initial data cleansing scripts.", challenges: "SQL server latency issues hampered final script execution.", goals: "Run validation tests and prepare final report." },
+            // ... Add other detailed log entries here
+        ];
+
+        let currentLogId = null;
+
+        // --- UTILITY & FEEDBACK (Copied from verification file) ---
+        
+        function showMessage(message, isError = false) {
+            const msgBox = document.getElementById('message-box');
+            msgBox.textContent = message;
+            msgBox.classList.remove('error-message');
+            if (isError) { msgBox.classList.add('error-message'); }
+            msgBox.classList.add('show');
+            
+            setTimeout(() => { msgBox.classList.remove('show'); }, 4000);
+        }
+
+        // --- DETAIL PAGE LOGIC ---
+
+        /**
+         * Finds log data based on ID and populates the UI elements.
+         * @param {number} logId - The ID of the log entry to load.
+         */
+        function loadLogEntry(logId) {
+            const log = MOCK_LOGS.find(l => l.id == logId);
+            
+            if (!log) {
+                document.getElementById('logbookTitle').textContent = "Error: Logbook Not Found";
+                showMessage("Could not load logbook details.", true);
+                return;
+            }
+
+            currentLogId = logId;
+            
+            // Populate main content
+            document.getElementById('logbookTitle').textContent = `Logbook Entry: Week ${log.week} (${log.student})`;
+            document.getElementById('entryTitle').textContent = `Week ${log.week} Submission - ${log.student}`;
+            document.getElementById('summaryText').textContent = log.summary;
+            document.getElementById('challengesText').textContent = log.challenges;
+            document.getElementById('goalsText').textContent = log.goals;
+            
+            // Populate action panel details
+            document.getElementById('submittedDate').textContent = log.submitted;
+            document.getElementById('dueDate').textContent = log.due;
+            document.getElementById('studentId').textContent = log.id; // Using ID as placeholder for Student ID
+            
+            // Update Status Badge
+            const statusBadge = document.getElementById('logStatusBadge');
+            statusBadge.textContent = log.status;
+            statusBadge.style.backgroundColor = log.status === 'Overdue' ? '#ef4444' : '#f59e0b';
+        }
+
+        /**
+         * Handles the final approval/rejection action.
+         * @param {string} status - 'Approved' or 'Rejected'.
+         */
+        function handleLogApproval(status) {
+            if (!currentLogId) {
+                 showMessage("Error: Cannot process. Log ID is missing.", true);
+                 return;
+            }
+
+            // In a real application, this would send an API call.
+            // Since we don't have a backend, we simulate the action and redirect.
+            
+            const action = status === 'Approved' ? 'approved' : 'rejected';
+            
+            // Show toast notification
+            showMessage(`Logbook ${action} successfully! Redirecting...`, status === 'Rejected');
+
+            // Simulate the status change and wait for the toast to show, then redirect.
+            setTimeout(() => {
+                // In a true implementation, you might pass a status code back to the verification page
+                // For this MVP, we just redirect back to the main list.
+                window.location.href = `logbook_verification.html?statusUpdated=true&logId=${currentLogId}&newStatus=${status}`;
+            }, 1500); 
+        }
+
+        // --- Initialization ---
+        document.addEventListener('DOMContentLoaded', () => {
+            const params = new URLSearchParams(window.location.search);
+            const logId = params.get('logId');
+            
+            if (logId) {
+                loadLogEntry(parseInt(logId));
+            } else {
+                 document.getElementById('logbookTitle').textContent = "Error: Invalid Logbook Link";
+            }
+        });
+    </script>
+</body>
+</html>
